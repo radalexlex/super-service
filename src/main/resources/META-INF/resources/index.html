@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TU-Varna Admin Creation</title>
+</head>
+<body>
+<h2>Create Admin</h2>
+
+<form id="adminForm">
+    <label>
+        Username:
+        <input type="text" name="username" required>
+    </label>
+    <br><br>
+
+    <label>
+        Password:
+        <input type="text" name="password" required>
+    </label>
+    <br><br>
+
+    <button type="submit">Create Admin</button>
+</form>
+
+<br>
+
+<div id="result" style="color: red; font-weight: bold;"></div>
+
+<script>
+    document.getElementById("adminForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const data = new URLSearchParams(new FormData(form));
+
+        const response = await fetch("http://localhost:8090/create", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: form.username.value,
+                password: form.password.value
+            })
+        });
+        const resultDiv = document.getElementById("result");
+
+        if (response.ok) {
+            resultDiv.style.color = "green";
+            resultDiv.textContent = "Admin created successfully.";
+        } else {
+            const errorText = await response.text();
+            resultDiv.style.color = "red";
+            resultDiv.textContent = "Error: " + errorText;
+        }
+    });
+</script>
+
+</body>
