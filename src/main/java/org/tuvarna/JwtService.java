@@ -10,9 +10,9 @@ import java.time.Duration;
 
 @ApplicationScoped
 public class JwtService {
-
-    @ConfigProperty(name = "smallrye.jwt.sign.key.location")
-    String privateKeyLocation;
+//
+//    @ConfigProperty(name = "smallrye.jwt.sign.key.location")
+//    String privateKeyLocation;
 
     @ConfigProperty(name ="mp.jwt.verify.issuer")
     String verifyIssuer;
@@ -23,7 +23,7 @@ public class JwtService {
                 .claim("userid", -1)
                 .groups("INNER")
                 .expiresIn(Duration.ofSeconds(10))
-                .sign(privateKeyLocation);
+                .sign();
     }
 
 }
